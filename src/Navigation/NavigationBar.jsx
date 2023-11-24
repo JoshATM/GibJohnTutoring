@@ -10,7 +10,7 @@ const NavigationBar = () => {
 
   return (
     <>
-    <StyledLogo>GibJohn Tutoring</StyledLogo>
+    <StyledLogo onClick={() => {navigate('/')}}>GibJohn Tutoring</StyledLogo>
     <StyledDiv>
         <Button onClick={() => {navigate('/')}} text='Home'/>
         <Button onClick={() => {navigate('/FindATutor')}} text='Find a Tutor'/>
@@ -26,11 +26,19 @@ export default NavigationBar
 
 const StyledDiv = styled.div`
   display: flex;
-  padding-right: 50px;
-  padding-top: 20px;
+  padding-right: 30px;
+  padding-top: 10px;
   gap: 20px;
   justify-content: flex-end;
-  align-items: flex-start;
+
+  &:after {
+    content:"";
+    top: 6vh;
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: black;
+    left: 0;
   
 `
 

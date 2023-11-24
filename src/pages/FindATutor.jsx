@@ -13,5 +13,6 @@ export default function FindATutor() {
 }
 
 const StyledDiv = styled.div`
+padding-top: 20px;
 font-size: 40px;
 `
