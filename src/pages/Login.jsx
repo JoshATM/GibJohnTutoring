@@ -28,7 +28,7 @@ const Register = () => {
       const response = await fetch('http://localhost:5000/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ firstname, lastname, email, phone, password, confirmPassword }),
       });
 
       if (response.ok) {
@@ -38,6 +38,7 @@ const Register = () => {
         // Handle server-side validation errors, if any
         const data = await response.json();
         setError(data.message || 'Registration failed. User might already exist or server error.');
+        console.log(data);
       }
     } catch (error) {
       // Handle network or other errors
