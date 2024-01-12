@@ -13,7 +13,7 @@ function PageNotFound() {
   }
   const error = "404";
     return (
-      <StyledDiv >
+      <StyledDiv>
         <h1>Page is not found!</h1>
         <h1>Redirecting to Home in {counter} seconds...</h1>
         <h1>Error {error}</h1>

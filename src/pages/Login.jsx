@@ -1,57 +1,188 @@
-import React, { useState } from 'react'
+// import React from 'react'
 import { styled } from 'styled-components'
+// import GoogleLoginFunction from '../components/LoginTypes/GoogleLogin'
+// import { useState } from 'react';
 
-export default function Login() {
-  const [FullName, setFullName] = useState();
-  const [Email, setEmail] = useState();
-  const [Password, setPassword] = useState();
-  const [ConfirmPassword, setConfirmPassword] = useState();
-  const [PhoneNumber, setPhoneNumber] = useState();
-  const [DOB, setDOB] = useState();
-  const [IsError, setIsError] = useState(false);
-  let ErrorMessage = "Error Message"
+// export default function Login() {
 
 
-  
+
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+const Register = () => {
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:5000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        // Registration successful
+        navigate('/login'); // Redirect to the login page
+      } else {
+        // Handle server-side validation errors, if any
+        const data = await response.json();
+        setError(data.message || 'Registration failed. User might already exist or server error.');
+      }
+    } catch (error) {
+      // Handle network or other errors
+      setError('Failed to connect to the server');
+    }
+  };
 
 
-  function Submit() {
-    return (
-      console.log("Submitted")
-    )
-  }
 
   return (
     <StyledPopup>
       <StyledInnerPopup>
-      <p>Login:</p>
-        <StyledTextBoxDiv>
+              <StyledP>Register</StyledP>
+               <StyledInputDiv>
+                 <StyledInput
+                    type="text"
+                    placeholder="First Name..."
+                    value={firstname}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    />
+                  <StyledInput
+                    type="text"
+                    placeholder="Last Name..."
+                    value={lastname}
+                    onChange={(e) => setLastName(e.target.value)}
+                    />
+                </StyledInputDiv>
+                <StyledInputDiv>
+                  <StyledInput
+                    type="email"
+                    placeholder="Email..."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    />
+                  <StyledInput
+                    type="tel"
+                    placeholder="Phone Number..."
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    />
+                </StyledInputDiv>
+                <StyledInputDiv>
+                  <StyledInput
+                    type="password"
+                    placeholder="Password..."
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    />
+                  <StyledInput
+                    type="password"
+                    placeholder="Confirm Password..."
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                  </StyledInputDiv>
+                  <br/>
+                <StyledButton type='submit' onClick={handleRegister}>Sign Up</StyledButton>
+                  {error && <StyledP>{error}</StyledP>}
 
-            <p>Enter Full Name:</p>
-            <StyledInput placeholder='Enter Full Name...'/>
+                  Don't have an account? 
+                  <Link to="/Login"> Login</Link>
+      </StyledInnerPopup>
+    </StyledPopup>
+  );
+};
 
-            <p>Enter Email:</p>
-            <StyledInput placeholder='Enter Email...'/>
+export default Register;
 
-            <p>Enter Password:</p>
-            <StyledInput type='password' placeholder='Enter Password...'/>
 
-            <p>Confirm Password:</p>
-            <StyledInput type='password' placeholder='Confirm Password...'/>
 
-            <p>Enter Phone Number:</p>
-            <StyledInput placeholder='Enter Phone Number...'/>
 
-            <p>Enter Date Of Birth:</p>
-            <StyledInput placeholder='Enter DOB...'/>
 
-            <StyledButton onClick={Submit}>Submit</StyledButton>
-            <div>{IsError ? `${ErrorMessage}` : <p></p>}</div>
-        </StyledTextBoxDiv>
-    </StyledInnerPopup>
-  </StyledPopup>
-  )
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//   return (
+//     <StyledPopup>
+//       <StyledInnerPopup>
+//         <StyledP>Sign Up with Google:</StyledP>
+//         <StyledTextBoxDiv>
+//         {/* <GoogleLoginFunction /> */}
+//         <br/>
+//         <StyledP>Or:</StyledP>
+//           <StyledInputDiv>
+//             <StyledInput
+//               type="text"
+//               placeholder="First Name..."
+//               value={firstname}
+//               onChange={(e) => setFirstName(e.target.value)}
+//               />
+//             <StyledInput
+//               type="text"
+//               placeholder="Last Name..."
+//               value={lastname}
+//               onChange={(e) => setLastName(e.target.value)}
+//               />
+//           </StyledInputDiv>
+//           <StyledInputDiv>
+//             <StyledInput
+//               type="email"
+//               placeholder="Email..."
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               />
+//             <StyledInput
+//               type="tel"
+//               placeholder="Phone Number..."
+//               value={phone}
+//               onChange={(e) => setPhone(e.target.value)}
+//               />
+//           </StyledInputDiv>
+//           <StyledInputDiv>
+//             <StyledInput
+//               type="password"
+//               placeholder="Password..."
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               />
+//             <StyledInput
+//               type="password"
+//               placeholder="Confirm Password..."
+//               value={confirmPassword}
+//               onChange={(e) => setConfirmPassword(e.target.value)}
+//               />
+//             </StyledInputDiv>
+//             <br/>
+//           <StyledButton onClick={handleLogin}>Login</StyledButton>
+//         </StyledTextBoxDiv>
+//       </StyledInnerPopup>
+//     </StyledPopup>
+//   );
+// }
 
 
 
@@ -59,14 +190,9 @@ export default function Login() {
 const StyledTextBoxDiv = styled.div`
 display: flex;
 flex-direction: column;
-align-items: stretch;
+align-items: center;
 `
 
-const StyledInput = styled.input`
-`
-
-const StyledButton = styled.button`
-`
 
 const StyledPopup = styled.div`
 display: flex;
@@ -85,4 +211,38 @@ padding: 32px;
 width: 100%;
 max-width: 640px;
 background-color: skyblue;
+border-radius: 20px;
+background: linear-gradient(315deg, skyblue, dodgerblue);
+`
+
+const StyledInputDiv = styled.div`
+display: inline-flex;
+gap: 10px;
+padding-bottom: 10px;
+`
+
+const StyledInput = styled.input`
+padding: 10px;
+border-radius: 10px;
+border: transparent;
+`
+
+const StyledButton = styled.button`
+border-radius: 10px;
+border: transparent;
+padding-left: 10px;
+padding-right: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
+background-color: white;
+&:hover {
+  background-color: lightgray;
+}
+&:active {
+  transform: scale(0.95);
+}
+`
+
+const StyledP = styled.p`
+color: white;
 `

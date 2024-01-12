@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import NavigationBar from "../Navigation/NavigationBar";
 import React from "react";
-import ChatBot from "../components/ChatBox";
+import ChatBot from "../components/ChatBot/ChatBox";
 
 export default function Home() {
   return (
