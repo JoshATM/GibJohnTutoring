@@ -7,6 +7,7 @@ import { useState } from "react";
 import Logo from '../assets/GibJohnTutoringLogo.png';
 import LoginPopup from '../components/LoginPopup';
 import RegisterPopup from '../components/RegisterPopup';
+import SidebarImage from '../assets/Sidebar.png';
 
 
 const NavigationBar = () => {
@@ -15,22 +16,35 @@ const NavigationBar = () => {
   const navigate = useNavigate();
   const Picture = localStorage.getItem('profilePicture');
 
+  
   const LoggedIn = false;
-
+  
   
   if (localStorage.getItem('welcome') == null) {
     localStorage.setItem('welcome', '0px');
   }
 
-  const CloseSideBar = () => {
-    document.getElementById('sideBar').style.left = '-283px;';
+  const AcceptCookieConsent = () => {
+    document.getElementById('CookieConsent').style.bottom = '-100%';
+  }
+
+  const DeclineCookieConsent = () => {
+    document.getElementById('CookieConsent').style.bottom = '-100%';
+  }
+
+  const CloseCookieButton = () => {
+    document.getElementById('CookieConsent').style.bottom = '-100%';
   }
   
-  const XButton = () => {
-    //   console.log('X-Button Pressed');
-    //   console.log(localStorage.getItem('welcome'));
-    //   localStorage.setItem('welcome', '-60px');
-    //   console.log(localStorage.getItem('welcome'));
+  const OpenSideBar = () => {
+    document.getElementById('sideBar').style.left = '0px'; // https://static.thenounproject.com/png/3401904-200.png used this image for the sidebar
+  }
+  
+  const CloseSideBar = () => {
+    document.getElementById('sideBar').style.left = '-100%';
+  }
+  
+  const CloseButton = () => {
   };
   
   const x = 1;
@@ -39,14 +53,15 @@ const NavigationBar = () => {
     <>
       <Welcome style={{ marginTop: localStorage.getItem('welcome')}}>
         Sign Up Today and get 10% OFF! Use code WELCOME to redeem!
-        <StyledXButton onClick={XButton}>X</StyledXButton>
+        <StyledCloseButton onClick={CloseButton}>X</StyledCloseButton>
       </Welcome>
       <StyledDiv>
         <StyledLogo src={Logo} onClick={() => { navigate('/') }} />
       </StyledDiv>
+      <StyledSideBarOpenButton src={SidebarImage} onClick={OpenSideBar}></StyledSideBarOpenButton>
       <StyledSideBar id="sideBar">
         <StyledInnerSideBar>
-          <StyledSideBarXButton onClick={CloseSideBar}>X</StyledSideBarXButton>
+          <StyledSideBarCloseButton onClick={CloseSideBar}>X</StyledSideBarCloseButton>
           <SideBarButton onClick={() => { navigate('/') }} text='Home' />
           <SideBarButton onClick={() => { navigate('/Profile') }} text='Profile' />
           <SideBarButton onClick={() => { navigate('/FindATutor') }} text='Find a Tutor' />
@@ -60,6 +75,12 @@ const NavigationBar = () => {
           <RegisterPopup trigger={registerbuttonPopup} setTrigger={setRegisterButtonPopup} />
         </StyledInnerSideBar>
       </StyledSideBar>
+      <CookieConsent id="CookieConsent" >
+        Cookie Consent
+        <button onClick={AcceptCookieConsent}>Accept</button>
+        <button onClick={DeclineCookieConsent}>Decline</button>
+        <StyledCloseButton onClick={CloseCookieButton}>X</StyledCloseButton>
+      </CookieConsent>
     </>
     )
   }
@@ -68,7 +89,7 @@ const NavigationBar = () => {
     <>
       <Welcome style={{ marginTop: localStorage.getItem('welcome')}}>
         Sign Up Today and get 10% OFF! Use code WELCOME to redeem!
-        <StyledXButton onClick={XButton}>X</StyledXButton>
+        <StyledCloseButton onClick={CloseButton}>X</StyledCloseButton>
       </Welcome>
 
       <StyledDiv>
@@ -117,7 +138,7 @@ transition: 0.69s ease;
 }
 `
 
-const StyledXButton = styled.button`
+const StyledCloseButton = styled.button`
 background: transparent;
 border: transparent;
 font-weight: bold;
@@ -144,13 +165,14 @@ top: 0;
 bottom: 0;
 left: 0;
 padding-top: 40px;
+transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 `
 
 const StyledInnerSideBar = styled.div`
 padding-left: 20px;
 `
 
-const StyledSideBarXButton = styled.button`
+const StyledSideBarCloseButton = styled.button`
 position: absolute;
 right: 10px;
 top: 1px;
@@ -159,5 +181,33 @@ border-color: transparent;
 background-color: transparent;
 &:hover {
   background-color: rgba(100, 100, 100, 0.5);
+}
+`
+
+const StyledSideBarOpenButton = styled.img`
+position: absolute;
+left: 10px;
+top: 1px;
+border-color: transparent;
+width: 70px;
+transition: 1s;
+&:hover {
+  background-color: rgba(100, 100, 100, 0.5);
+}
+border-radius: 10%;
+background-color: transparent;
+`
+
+const CookieConsent = styled.div`
+width: -webkit-fill-available;
+text-align: center;
+background-color: blue;
+color: white;
+padding: 10px;
+bottom: 0;
+position: fixed;
+transition: 0.69s ease;
+&::selection {
+  background: black;
 }
 `

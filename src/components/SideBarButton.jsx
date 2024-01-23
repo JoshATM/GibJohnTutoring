@@ -16,6 +16,10 @@ margin-bottom: 15px;
 height: 60px;
 width: 90%;
 align-self: center;
+&:hover {
+    transform: scale(1.05);
+    transition: 0.69s ease;
+}
 `
 
 
