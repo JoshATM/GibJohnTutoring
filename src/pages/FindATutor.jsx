@@ -149,6 +149,8 @@ const StyledText = styled.p`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding-left: 50px;
+  padding-right: 20px;
 `;
 
 const StyledMainText = styled.div``;

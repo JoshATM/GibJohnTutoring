@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SideBarButton from "../components/SideBarButton";
 import { useState } from "react";
@@ -67,9 +67,14 @@ const NavigationBar = () => {
         </StyledInnerSideBar>
       </StyledSideBar>
       <CookieConsent id="CookieConsent" >
-        This website uses Cookies to enhance the user experience.
-        <CookieConsentButton onClick={AcceptCookieConsent}>Accept</CookieConsentButton>
-        <CookieConsentButton onClick={DeclineCookieConsent}>Decline</CookieConsentButton>
+        <p>
+          This website uses Cookies to enhance the user experience.
+        </p>
+        <CookieConsentButtonDiv>
+          <CookieConsentButton onClick={AcceptCookieConsent}>Accept</CookieConsentButton>
+          <CookieConsentButton onClick={DeclineCookieConsent}>Decline</CookieConsentButton>
+        </CookieConsentButtonDiv>
+        <StyledLink>Privacy and Cookie Policy</StyledLink>
         <StyledCloseButton onClick={CloseCookieButton}>X</StyledCloseButton>
       </CookieConsent>
     </>
@@ -109,6 +114,9 @@ font-weight: bold;
 color: white;
 position: absolute;
 right: 10px;
+&:hover {
+  background-color: black;
+}
 `
 
 const StyledSideBar = styled.div`
@@ -163,7 +171,10 @@ color: white;
 padding: 10px;
 bottom: 0;
 position: fixed;
+display: flex;
 transition: 0.69s ease;
+align-items: center;
+justify-content: center;
 &::selection {
   background: black;
 }
@@ -174,7 +185,25 @@ background-color: transparent;
 border-color: transparent;
 color: white;
 font-weight: bold;
+
 &:hover {
   background-color: black;
+}
+`
+
+const CookieConsentButtonDiv = styled.div`
+display: flex;
+justify-content: center;
+gap: 20px;
+padding-left: 40px;
+`
+
+const StyledLink = styled.a`
+position: absolute;
+left: 100px;
+color: white;
+font-size: 10px;
+&:hover {
+  text-decoration: underline;
 }
 `

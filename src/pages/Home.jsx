@@ -10,7 +10,8 @@ export default function Home() {
       <StyledTopDiv>
 
         <NavigationBar />
-        <StyledHomeTopText>Welcome to GibJohn Tutoring!</StyledHomeTopText>
+        <StyledHomeTopTextTitle>Welcome to GibJohn Tutoring!</StyledHomeTopTextTitle>
+        <StyledHomeTopTextSlogan>Building Strong Foundations for Bright Futures</StyledHomeTopTextSlogan>
         <StyledImageVerticlePersonHome src={VerticlePersonHome}/>
       </StyledTopDiv>
         <StyledHomeMainText>
@@ -47,9 +48,17 @@ border-radius: 35%;
 `;
 
 
-const StyledHomeTopText = styled.h1`
+const StyledHomeTopTextTitle = styled.h1`
   font-size: 40px;
   top: 35%;
+  left: 42%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  `;
+
+  const StyledHomeTopTextSlogan = styled.h1`
+  font-size: 25px;
+  top: 40%;
   left: 42%;
   position: absolute;
   transform: translate(-50%, -50%);
