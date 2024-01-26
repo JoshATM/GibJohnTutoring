@@ -77,6 +77,9 @@ const NavigationBar = () => {
         <StyledLink>Privacy and Cookie Policy</StyledLink>
         <StyledCloseButton onClick={CloseCookieButton}>X</StyledCloseButton>
       </CookieConsent>
+      <Footer>
+        <StyledFooterText>© 2021 GibJohn Tutoring</StyledFooterText>
+      </Footer>
     </>
     )
   }
@@ -206,4 +209,16 @@ font-size: 10px;
 &:hover {
   text-decoration: underline;
 }
+`
+
+const Footer = styled.div`
+display: flex;
+position: fixed;
+bottom: 0;
+width: -webkit-fill-available;
+`
+
+const StyledFooterText = styled.p`
+color: white;
+font-size: 10px;
 `
