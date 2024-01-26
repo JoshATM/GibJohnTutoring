@@ -43,6 +43,7 @@ position: absolute;
 top: 25%;
 left: 60%;
 transform: scaleX(-1);
+border-radius: 35%;
 `;
 
 
