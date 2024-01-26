@@ -78,7 +78,7 @@ const NavigationBar = () => {
         <StyledCloseButton onClick={CloseCookieButton}>X</StyledCloseButton>
       </CookieConsent>
       <Footer>
-        <StyledFooterText>© 2021 GibJohn Tutoring</StyledFooterText>
+        <StyledFooterText>© 2024 GibJohn Tutoring</StyledFooterText>
       </Footer>
     </>
     )

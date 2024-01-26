@@ -123,9 +123,9 @@ left: 0;
 
 const StyledInnerPopup = styled.div`
 position: relative;
-padding: 32px;
+padding: 42px;
 width: 100%;
-max-width: 640px;
+max-width: 680px;
 background-color: skyblue;
 border-radius: 20px;
 background: linear-gradient(315deg, skyblue, dodgerblue);
