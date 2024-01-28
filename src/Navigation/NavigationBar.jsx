@@ -1,22 +1,27 @@
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SideBarButton from "../components/SideBarButton";
 import { useState } from "react";
 import Logo from '../assets/GibJohnTutoringLogo.png';
-import LoginPopup from '../components/LoginPopup';
-import RegisterPopup from '../components/RegisterPopup';
 import SidebarImage from '../assets/Sidebar.png';
 
 
+const Header = () => {
+  return (
+    <>
+      <NavigationBar />
+      <Outlet />
+    </>
+  );
+};
+
+export default Header;
+
+
 const NavigationBar = () => {
-  const [loginbuttonPopup, setLoginButtonPopup] = useState(false);
-  const [registerbuttonPopup, setRegisterButtonPopup] = useState(false);
   const navigate = useNavigate();
   const Picture = localStorage.getItem('profilePicture');
-
-  
-  const LoggedIn = false;
-  
+  const LoggedIn = localStorage.getItem('LoggedIn');
   
   if (localStorage.getItem('welcome') == null) {
     localStorage.setItem('welcome', '0px');
@@ -42,8 +47,6 @@ const NavigationBar = () => {
     document.getElementById('sideBar').style.left = '-100%';
   }
   
-  const x = 1;
-  if (x==1) {
     return (
     <>
       <StyledDiv>
@@ -56,28 +59,32 @@ const NavigationBar = () => {
           <SideBarButton onClick={() => { navigate('/') }} text='Home' />
           <SideBarButton onClick={() => { navigate('/Profile') }} text='Profile' />
           <SideBarButton onClick={() => { navigate('/FindATutor') }} text='Find a Tutor' />
-          {LoggedIn != true
+          {LoggedIn === 'true'
           ?
-          <SideBarButton onClick={() => {setLoginButtonPopup(false); setRegisterButtonPopup(true)}} text='Register' />
+          <SideBarButton onClick={() => { navigate('/Resources') }} text='Resources' />
           :
-          <SideBarButton onClick={() => {setRegisterButtonPopup(false); setLoginButtonPopup(true)}} text='Login'/>
+          <SideBarButton onClick={() => { navigate('/Login') }} text='Login' />
           }
-          <LoginPopup trigger={loginbuttonPopup} setTrigger={setLoginButtonPopup} />
-          <RegisterPopup trigger={registerbuttonPopup} setTrigger={setRegisterButtonPopup} />
         </StyledInnerSideBar>
       </StyledSideBar>
       <CookieConsent id="CookieConsent" >
-        This website uses Cookies to enhance the user experience.
-        <CookieConsentButton onClick={AcceptCookieConsent}>Accept</CookieConsentButton>
-        <CookieConsentButton onClick={DeclineCookieConsent}>Decline</CookieConsentButton>
+        <p>
+          This website uses Cookies to enhance the user experience.
+        </p>
+        <CookieConsentButtonDiv>
+          <CookieConsentButton onClick={AcceptCookieConsent}>Accept</CookieConsentButton>
+          <CookieConsentButton onClick={DeclineCookieConsent}>Decline</CookieConsentButton>
+        </CookieConsentButtonDiv>
+        <StyledLink>Privacy and Cookie Policy</StyledLink>
         <StyledCloseButton onClick={CloseCookieButton}>X</StyledCloseButton>
       </CookieConsent>
+      <Footer>
+        <StyledFooterText>© 2024 GibJohn Tutoring</StyledFooterText>
+      </Footer>
     </>
     )
   }
-};
 
-export default NavigationBar
 
 const StyledDiv = styled.div`
 display: flex;
@@ -109,6 +116,9 @@ font-weight: bold;
 color: white;
 position: absolute;
 right: 10px;
+&:hover {
+  background-color: black;
+}
 `
 
 const StyledSideBar = styled.div`
@@ -122,11 +132,11 @@ top: 0;
 bottom: 0;
 left: -100%;
 padding-top: 40px;
+padding-left: 20px;
 transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 `
 
 const StyledInnerSideBar = styled.div`
-padding-left: 20px;
 `
 
 const StyledSideBarCloseButton = styled.button`
@@ -163,7 +173,10 @@ color: white;
 padding: 10px;
 bottom: 0;
 position: fixed;
+display: flex;
 transition: 0.69s ease;
+align-items: center;
+justify-content: center;
 &::selection {
   background: black;
 }
@@ -174,7 +187,37 @@ background-color: transparent;
 border-color: transparent;
 color: white;
 font-weight: bold;
+
 &:hover {
   background-color: black;
 }
+`
+
+const CookieConsentButtonDiv = styled.div`
+display: flex;
+justify-content: center;
+gap: 20px;
+padding-left: 40px;
+`
+
+const StyledLink = styled.a`
+position: absolute;
+left: 100px;
+color: white;
+font-size: 10px;
+&:hover {
+  text-decoration: underline;
+}
+`
+
+const Footer = styled.div`
+display: flex;
+position: fixed;
+bottom: 0;
+width: -webkit-fill-available;
+`
+
+const StyledFooterText = styled.p`
+color: white;
+font-size: 10px;
 `

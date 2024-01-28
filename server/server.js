@@ -13,15 +13,15 @@ const db = new sqlite3.Database('./db/GibJohnDatabase.db', sqlite3.OPEN_READWRIT
     console.error(err.message);
   } else {
     console.log('Connected to the SQLite database.');
-    db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)");
+    db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, firstName TEXT, lastName TEXT, password TEXT, email TEXT, phoneNumber TEXT)");
   }
 });
 
 // User Registration
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { firstName, lastName, password, email, phoneNumber } = req.body;
   try {
-    db.get("SELECT * FROM users WHERE username = ?", [username], async (error, row) => {
+    db.get("SELECT * FROM users WHERE email = ?", [email], async (error, row) => {
       if (error) {
         return res.status(500).json({ error: error.message });
       }
@@ -32,11 +32,11 @@ app.post('/register', async (req, res) => {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      db.run("INSERT INTO users (username, password) VALUES (?, ?)", [username, hashedPassword], function (error) {
+      db.run("INSERT INTO users (firstName, lastName, password, email, phoneNumber) VALUES (?, ?)", [email, firstName, lastName, email, phoneNumber, hashedPassword], function (error) {
         if (error) {
           return res.status(500).json({ error: error.message });
         }
-        res.status(201).json({ id: this.lastID, username });
+        res.status(201).json({ id: this.lastID, email });
       });
     });
   } catch (err) {
@@ -46,9 +46,9 @@ app.post('/register', async (req, res) => {
 
 // User Login
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    db.get("SELECT * FROM users WHERE username = ?", [username], async (error, row) => {
+    db.get("SELECT * FROM users WHERE email = ?", [email], async (error, row) => {
       if (error) {
         return res.status(500).json({ error: error.message });
       }
@@ -61,7 +61,7 @@ app.post('/login', async (req, res) => {
           res.status(400).json("Invalid Password");
         }
       } else {
-        res.status(400).json("User does not exist");
+        res.status(400).json("Email does not exist");
       }
     });
   } catch (err) {
@@ -76,12 +76,12 @@ app.get('/test', (req, res) => {
 
 // Get list of registered users
 app.get('/users', (req, res) => {
-  db.all("SELECT username FROM users", [], (error, rows) => {
+  db.all("SELECT email FROM users", [], (error, rows) => {
     if (error) {
       return res.status(500).json({ error: error.message });
     }
-    const usernames = rows.map(row => row.username);
-    res.json(usernames);
+    const emails = rows.map(row => row.email);
+    res.json(emails);
   });
 });
 

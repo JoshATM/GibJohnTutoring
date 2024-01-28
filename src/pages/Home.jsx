@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import NavigationBar from "../Navigation/NavigationBar";
 import React from "react";
 import VerticlePersonHome from "../assets/StockPersonVerticleHome.jpg";
 import StockTeacherVerticleHome from "../assets/StockTeacherVerticleHome.jpg";
@@ -8,9 +7,8 @@ export default function Home() {
   return (
     <>
       <StyledTopDiv>
-
-        <NavigationBar />
-        <StyledHomeTopText>Welcome to GibJohn Tutoring!</StyledHomeTopText>
+        <StyledHomeTopTextTitle>Welcome to GibJohn Tutoring!</StyledHomeTopTextTitle>
+        <StyledHomeTopTextSlogan>Building Strong Foundations for Bright Futures</StyledHomeTopTextSlogan>
         <StyledImageVerticlePersonHome src={VerticlePersonHome}/>
       </StyledTopDiv>
         <StyledHomeMainText>
@@ -33,22 +31,31 @@ export default function Home() {
 const StyledTopDiv = styled.div`
   font-size: 40px;
   background-color: cornflowerblue;
-  padding-bottom: 600px;
+  padding: 300px;
   color: white;
   `;
 
 const StyledImageVerticlePersonHome = styled.img`
 height: 30vh;
 position: absolute;
-top: 25%;
+top: 250px;
 left: 60%;
 transform: scaleX(-1);
+border-radius: 35%;
 `;
 
 
-const StyledHomeTopText = styled.h1`
+const StyledHomeTopTextTitle = styled.h1`
   font-size: 40px;
-  top: 35%;
+  top: 400px;
+  left: 42%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  `;
+
+  const StyledHomeTopTextSlogan = styled.h1`
+  font-size: 25px;
+  top: 450px;
   left: 42%;
   position: absolute;
   transform: translate(-50%, -50%);
@@ -57,17 +64,17 @@ const StyledHomeTopText = styled.h1`
 const StyledHomeMainText = styled.p`
 font-size: 24px;
 text-align: center;
-padding-left: 600px;
-padding-right: 100px;
+padding-left: 650px;
+padding-right: 150px;
 padding-top: 100px;
 color: #0a3d48;
 font-family: system-ui;
   `;
 
 const StyledImageVerticleTeacherHome = styled.img`
-height: 80vh;
+height: 800px;
 position: absolute;
-top: 77%;
+top: 700px;
 left: 0%;
 z-index: -1;
 `;

@@ -1,131 +1,112 @@
 import { styled } from 'styled-components'
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import SideBarButton from '../components/SideBarButton';
-import LoginPopup from '../components/LoginPopup';
-import RegisterPopup from '../components/RegisterPopup';
+import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [registerbuttonPopup, setRegisterButtonPopup] = useState(false);
   const navigate = useNavigate();
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    try {
-      const response = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        setIsLoggedIn(true); // Update login status
-        navigate('/'); // Navigate to Home on successful login
-      } else {
-        setError('Invalid username or password');
-      }
-    } catch (error) {
-      setError('Failed to connect to the server');
+  
+  const Submit = () => {
+    const validEmail = localStorage.getItem('email');
+    const validPassword = localStorage.getItem('password');
+    if (email === validEmail && password === validPassword) {
+      localStorage.setItem('LoggedIn', true);
+      navigate('/');
+    } else {
+      alert('Incorrect Username or Password');
     }
-  };
-
-
-
+  }
+  
   return (
-    <StyledPopup>
-      <StyledInnerPopup>
-        <StyledP>Login</StyledP>
-          <StyledTextBoxDiv>
-            <StyledInput
-              type="email"
-              placeholder="Email..."
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              />
-            <StyledInput
-              type="password"
-              placeholder="Password..."
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              />
-          </StyledTextBoxDiv>
-            <br/>
-          <StyledButton type='submit' onClick={handleLogin}>Log In</StyledButton>
-            {error && <StyledP>{error}</StyledP>}
-            Don't have an account? 
-            <SideBarButton onClick={() => setRegisterButtonPopup(true)} text='Register'>Register</SideBarButton>
-            <RegisterPopup trigger={registerbuttonPopup} setTrigger={setRegisterButtonPopup} />
-      </StyledInnerPopup>
-    </StyledPopup>
+    <LoginForm>
+      <h1>Login</h1>
+      <br />
+      <br />
+      <StyledInputDiv>
+        <FormInput
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <FormInput
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </StyledInputDiv>
+      <br />
+      <LoginButton onClick={Submit}>Login</LoginButton>
+      <br />
+      <RegisterDiv>
+        <StyledRegisterText>Dont have an account?</StyledRegisterText>
+        <RegisterLink onClick={() => { navigate('/Register') }}>Register</RegisterLink>
+      </RegisterDiv>
+      <br />
+    </LoginForm>
   );
-};
-
-export default Register;
+}
 
 
 
-const StyledTextBoxDiv = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-`
+const StyledRegisterText = styled.p`
+  display: flex;
+  font-size: 20px;
+  text-align: center;
+`;
 
+const RegisterDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
 
-const StyledPopup = styled.div`
-display: flex;
-position: fixed;
-width: -webkit-fill-available;
-height: -webkit-fill-available;
-background-color: rgba(0, 0, 0, 0.3);
-justify-content: center;
-align-items: center;
-top: 0;
-left: 0;
-`
+const RegisterLink = styled.p`
+color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 20px;
+  text-align: center;
+  `
 
-const StyledInnerPopup = styled.div`
-position: relative;
-padding: 32px;
-width: 100%;
-max-width: 640px;
-background-color: skyblue;
-border-radius: 20px;
-background: linear-gradient(315deg, skyblue, dodgerblue);
-`
+const LoginForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 128, 255, 0.5);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  width: 800px;
+  margin-top: 50px;
+  margin-left: 50%;
+  margin-right: 50%;
+  padding: 20px;
+  transform: translate(-50%, 0);
+`;
+
+const FormInput = styled.input`
+margin-bottom: 10px;
+padding: 15px;
+width: 340px;
+`;
+
+const LoginButton = styled.button`
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 500px;
+  margin-left: 50%;
+  margin-right: 50%;
+  transform: translate(-50%, 0);
+`;
 
 const StyledInputDiv = styled.div`
-display: inline-flex;
-gap: 10px;
-padding-bottom: 10px;
-`
-
-const StyledInput = styled.input`
-padding: 10px;
-border-radius: 10px;
-border: transparent;
-`
-
-const StyledButton = styled.button`
-border-radius: 10px;
-border: transparent;
-padding-left: 10px;
-padding-right: 10px;
-padding-top: 10px;
-padding-bottom: 10px;
-background-color: white;
-&:hover {
-  background-color: lightgray;
-}
-&:active {
-  transform: scale(0.95);
-}
-`
-
-const StyledP = styled.p`
-color: white;
+display: flex;
+align-items: center;
+justify-content: space-around;
 `

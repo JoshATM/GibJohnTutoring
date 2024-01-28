@@ -1,164 +1,160 @@
-import { styled } from 'styled-components'
+import styled from 'styled-components';
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import SideBarButton from '../components/SideBarButton';
-import LoginPopup from '../components/LoginPopup';
-import RegisterPopup from '../components/RegisterPopup';
+import { useNavigate } from "react-router-dom";
 
-const Register = () => {
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+export default function Register() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [loginbuttonPopup, setLoginButtonPopup] = useState(false);
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
   const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setError('');
 
-    try {
-      const response = await fetch('http://localhost:5000/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password, email, phone, firstname, lastname }),
-      });
+  const Submit = () => {
 
-      if (response.ok) {
-        // Registration successful
-        navigate('/login'); // Redirect to the login page
-      } else {
-        // Handle server-side validation errors, if any
-        const data = await response.json();
-        setError(data.message || 'Registration failed. User might already exist or server error.');
-      }
-    } catch (error) {
-      // Handle network or other errors
-      setError('Failed to connect to the server');
+    if (password === confirmPassword) {
+      localStorage.setItem('firstName', firstName);
+      localStorage.setItem('lastName', lastName);
+      localStorage.setItem('password', password);
+      localStorage.setItem('email', email);
+      localStorage.setItem('phoneNumber', phoneNumber);
+      localStorage.setItem('LoggedIn', true);
+
+      console.log('firstName', firstName);
+      console.log('lastName', lastName);
+      console.log('password', password);
+      console.log('email', email);
+      console.log('phoneNumber', phoneNumber);
+      console.log('LoggedIn', true);
+
+      navigate('/');
+
+    } else {
+      alert('Passwords do not match');
     }
   };
 
+
   return (
-    <StyledPopup>
-      <StyledInnerPopup>
-              <StyledP>Register</StyledP>
-               <StyledInputDiv>
-                 <StyledInput
-                    type="text"
-                    placeholder="First Name..."
-                    value={firstname}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    />
-                  <StyledInput
-                    type="text"
-                    placeholder="Last Name..."
-                    value={lastname}
-                    onChange={(e) => setLastName(e.target.value)}
-                    />
-                </StyledInputDiv>
-                <StyledInputDiv>
-                  <StyledInput
-                    type="email"
-                    placeholder="Email..."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    />
-                  <StyledInput
-                    type="tel"
-                    placeholder="Phone Number..."
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    />
-                </StyledInputDiv>
-                <StyledInputDiv>
-                  <StyledInput
-                    type="password"
-                    placeholder="Password..."
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    />
-                  <StyledInput
-                    type="password"
-                    placeholder="Confirm Password..."
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                  </StyledInputDiv>
-                  <br/>
-                <StyledButton type='submit' onClick={handleRegister}>Sign Up</StyledButton>
-                  {error && <StyledP>{error}</StyledP>}
-
-                  Already have an account?
-                  <SideBarButton onClick={() => setLoginButtonPopup(true)} text='Login' />
-                  <LoginPopup trigger={loginbuttonPopup} setTrigger={setLoginButtonPopup} />
-      </StyledInnerPopup>
-    </StyledPopup>
+    <RegisterForm>
+      <h1>Register</h1>
+      <br />
+      <br />
+      <StyledInputDiv>
+        <FormInput
+          type="text"
+          placeholder="First Name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+        <FormInput
+          type="text"
+          placeholder="Last Name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+      </StyledInputDiv>
+      <StyledInputDiv>
+        <FormInput
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <FormInput
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+      </StyledInputDiv>
+      <StyledInputDiv>
+        <FormInput
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <FormInput
+          type="tel"
+          placeholder="Phone Number"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+      </StyledInputDiv>
+      <br />
+      <RegisterButton onClick={Submit}>Register</RegisterButton>
+      <br />
+      <LoginDiv>
+        <StyledLoginText>Already have an account?</StyledLoginText>
+        <LoginLink onClick={() => { navigate('/Login') }}>Login</LoginLink>
+      </LoginDiv>
+      <br />
+    </RegisterForm>
+    
   );
-};
-
-export default Register;
+}
 
 
-const StyledTextBoxDiv = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-`
+const StyledLoginText = styled.p`
+  display: flex;
+  font-size: 20px;
+  text-align: center;
+`;
+
+const LoginDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const LoginLink = styled.p`
+color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 20px;
+  text-align: center;
+  `
 
 
-const StyledPopup = styled.div`
-display: flex;
-position: fixed;
-width: -webkit-fill-available;
-height: -webkit-fill-available;
-background-color: rgba(0, 0, 0, 0.3);
-justify-content: center;
-align-items: center;
-top: 0;
-left: 0;
-`
+const RegisterForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 128, 255, 0.5);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  width: 800px;
+  margin-top: 50px;
+  margin-left: 50%;
+  margin-right: 50%;
+  padding: 20px;
+  transform: translate(-50%, 0);
+`;
 
-const StyledInnerPopup = styled.div`
-position: relative;
-padding: 32px;
-width: 100%;
-max-width: 640px;
-background-color: skyblue;
-border-radius: 20px;
-background: linear-gradient(315deg, skyblue, dodgerblue);
-`
+const FormInput = styled.input`
+margin-bottom: 10px;
+padding: 15px;
+width: 340px;
+`;
+
+const RegisterButton = styled.button`
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 500px;
+  margin-left: 50%;
+  margin-right: 50%;
+  transform: translate(-50%, 0);
+`;
 
 const StyledInputDiv = styled.div`
-display: inline-flex;
-gap: 10px;
-padding-bottom: 10px;
-`
-
-const StyledInput = styled.input`
-padding: 10px;
-border-radius: 10px;
-border: transparent;
-`
-
-const StyledButton = styled.button`
-border-radius: 10px;
-border: transparent;
-padding-left: 10px;
-padding-right: 10px;
-padding-top: 10px;
-padding-bottom: 10px;
-background-color: white;
-&:hover {
-  background-color: lightgray;
-}
-&:active {
-  transform: scale(0.95);
-}
-`
-
-const StyledP = styled.p`
-color: white;
+display: flex;
+align-items: center;
+justify-content: space-around;
 `
