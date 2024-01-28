@@ -1,5 +1,11 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { styled } from "styled-components";
+=======
+import NavigationBar from "../Navigation/NavigationBar";
+import { styled } from "styled-components";
+
+>>>>>>> a7c3c4c67ea75433fda0ec69e020720c74b776be
 import TutorImage from "../assets/Undefined.jpg";
 
 const tutors = [
@@ -79,6 +85,10 @@ export default function FindATutor() {
 
   return (
     <>
+<<<<<<< HEAD
+=======
+      <NavigationBar />
+>>>>>>> a7c3c4c67ea75433fda0ec69e020720c74b776be
       <StyledDiv>
         <h1>Find A Tutor</h1>
         <h2>Search for a tutor by name, subject, or price</h2>
