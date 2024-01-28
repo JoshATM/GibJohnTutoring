@@ -23,20 +23,29 @@ const NavigationBar = () => {
   const Picture = localStorage.getItem('profilePicture');
   const LoggedIn = localStorage.getItem('LoggedIn');
   
+  
   if (localStorage.getItem('welcome') == null) {
     localStorage.setItem('welcome', '0px');
   }
-
+  
   const AcceptCookieConsent = () => {
     document.getElementById('CookieConsent').style.bottom = '-100%';
+    localStorage.setItem('IsCookieConsent', true);
   }
-
+  
   const DeclineCookieConsent = () => {
     document.getElementById('CookieConsent').style.bottom = '-100%';
+    localStorage.setItem('IsCookieConsent', true);
   }
-
+  
   const CloseCookieButton = () => {
     document.getElementById('CookieConsent').style.bottom = '-100%';
+    localStorage.setItem('IsCookieConsent', true);
+  }
+  
+  if (localStorage.getItem('IsCookieConsent') == true) {
+    document.getElementById('CookieConsent').style.display = 'none';
+    console.log('Cookie Consent Accepted');
   }
   
   const OpenSideBar = () => {
@@ -46,11 +55,22 @@ const NavigationBar = () => {
   const CloseSideBar = () => {
     document.getElementById('sideBar').style.left = '-100%';
   }
+
+  const Logout = () => {
+    localStorage.setItem('LoggedIn', false);
+    window.location.reload();
+  }
   
     return (
     <>
       <StyledDiv>
         <StyledLogo src={Logo} onClick={() => { navigate('/') }} />
+        {LoggedIn === 'true'
+        ?
+        <StyledLogoutButton onClick={Logout}>Logout</StyledLogoutButton>
+        :
+        <div></div>
+        }
       </StyledDiv>
       <StyledSideBarOpenButton src={SidebarImage} onClick={OpenSideBar}></StyledSideBarOpenButton>
       <StyledSideBar id="sideBar">
@@ -86,6 +106,23 @@ const NavigationBar = () => {
   }
 
 
+const StyledLogoutButton = styled.button`
+background-color: transparent;
+border-color: transparent;
+color: white;
+font-weight: bold;
+display: flex;
+position: absolute;
+right: 100px;
+top: 40px;
+border-radius: 20px;
+font-size: 30px;
+padding: 10px;
+&:hover {
+  background-color: black;
+}
+`
+
 const StyledDiv = styled.div`
 display: flex;
 padding-left: 0px;
@@ -96,9 +133,6 @@ gap: 20px;
 justify-content: space-evenly;
 background-color: #0d67b5;
 align-items: center;
-@media (max-width: 750px) {
-  display: none;
-}
 `
 
 const StyledLogo = styled.img`
@@ -107,6 +141,7 @@ height: 140px;
 width: 450px;
 top: 0;
 object-fit: cover;
+cursor: pointer;
 `
 
 const StyledCloseButton = styled.button`
@@ -152,15 +187,14 @@ background-color: transparent;
 `
 
 const StyledSideBarOpenButton = styled.img`
+cursor: pointer;
+filter: invert(100%);
 position: absolute;
 left: 10px;
 top: 1px;
 border-color: transparent;
 width: 70px;
 transition: 1s;
-&:hover {
-  background-color: rgba(100, 100, 100, 0.5);
-}
 border-radius: 10%;
 background-color: transparent;
 `

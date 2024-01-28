@@ -78,11 +78,6 @@ export default function FindATutor() {
   });
 
   return (
-    <>
-<<<<<<< HEAD
-=======
-      <NavigationBar />
->>>>>>> a7c3c4c67ea75433fda0ec69e020720c74b776be
       <StyledDiv>
         <h1>Find A Tutor</h1>
         <h2>Search for a tutor by name, subject, or price</h2>
@@ -122,7 +117,6 @@ export default function FindATutor() {
         </>
         ))}
       </StyledDiv>
-    </>
   );
 }
 

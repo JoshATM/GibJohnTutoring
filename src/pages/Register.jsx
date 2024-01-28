@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
@@ -10,30 +11,63 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
-  const navigate = useNavigate();
+  let error = '';
+  let validEmail = false;
+  let validPassword = false;
+  let validPhoneNumber = false;
+
+
+  if (email.includes('@' && '.') === true) {
+    validEmail = true;
+  } else {
+    validEmail = false;
+    error = 'Email must include @ AND .';
+  }
+  if (password === confirmPassword) {
+    validPassword = true;
+  } else {
+    validPassword = false;
+    error = 'Passwords must match';
+  }
+  if (password > 8) {
+    validPassword = true;
+  } else {
+    validPassword = false;
+    error = 'Password must be 8 characters or longer';
+  }
+  if (phoneNumber.length > 9) {
+    validPhoneNumber = true;
+  } else {
+    validPhoneNumber = false;
+    error = 'Phone Number invalid';
+  }
 
 
   const Submit = () => {
-
-    if (password === confirmPassword) {
+    if (
+      validEmail === true &&
+      validPassword === true
+    ) {
+      alert('Account Created');
       localStorage.setItem('firstName', firstName);
       localStorage.setItem('lastName', lastName);
       localStorage.setItem('password', password);
       localStorage.setItem('email', email);
       localStorage.setItem('phoneNumber', phoneNumber);
       localStorage.setItem('LoggedIn', true);
-
       console.log('firstName', firstName);
       console.log('lastName', lastName);
       console.log('password', password);
       console.log('email', email);
       console.log('phoneNumber', phoneNumber);
       console.log('LoggedIn', true);
-
+      
+      
+      localStorage.setItem('LoggedIn', true);
       navigate('/');
-
+      window.location.reload();
     } else {
-      alert('Passwords do not match');
+      alert(`${error}`);
     }
   };
 
@@ -87,6 +121,7 @@ export default function Register() {
       </StyledInputDiv>
       <br />
       <RegisterButton onClick={Submit}>Register</RegisterButton>
+      <div>{`${error}`}</div>
       <br />
       <LoginDiv>
         <StyledLoginText>Already have an account?</StyledLoginText>

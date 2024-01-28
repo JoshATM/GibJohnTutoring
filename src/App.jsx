@@ -18,6 +18,8 @@ const App = () => {
   if (localStorage.getItem('profilePicture') == null){
     localStorage.setItem('profilePicture', Undefined)
   }
+  const isLoggedIn = localStorage.getItem('LoggedIn') === 'true';
+
   const router = createBrowserRouter([
     {
       path: '/',
@@ -25,13 +27,14 @@ const App = () => {
       children: [
         { path: "", element: <Home /> },
         { path: "*", element: <PageNotFound /> },
-        { path: "FindATutor", element: <FindATutor /> },
-        { path: "Profile", element: <UsersInformation /> },
+        { path: "FindATutor", element: isLoggedIn ? <FindATutor /> : <Login />},
+        { path: "Profile", element: isLoggedIn ? <UsersInformation /> : <Login /> },
         { path: "Login", element: <Login /> },
         { path: "Register", element: <Register /> },
-        { path: "Resources", element: <Resources /> },
+        { path: "Resources", element: isLoggedIn ? <Resources /> : <Login />},
       ],
     },
+    
   ]);
 
   return (
