@@ -29,7 +29,7 @@ export default function Register() {
     validPassword = false;
     error = 'Passwords must match';
   }
-  if (password > 8) {
+  if (password.length > 8) {
     validPassword = true;
   } else {
     validPassword = false;
